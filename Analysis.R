@@ -1,3 +1,5 @@
+#setwd
+
 #1. Merge the training and the test set 
 
 trainData <- read.table("./UCI-HAR-Dataset/train/X_train.txt")
