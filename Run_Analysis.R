@@ -1,4 +1,4 @@
-#1. Merges the training and the test sets to create one data set.
+#1. Merge the training and the test set 
 
 trainData <- read.table("./UCI-HAR-Dataset/train/X_train.txt")
 trainLabel <- read.table("./UCI-HAR-Dataset/train/y_train.txt")
@@ -17,7 +17,7 @@ joinLabel <- rbind(trainLabel, testLabel)
 joinSubject <- rbind(trainSubject, testSubject)
 
 
-#2. Extracts only the measurements on the mean and standard deviation for each measurement. 
+#2. Extract only the measurements on the mean and standard deviation for each measurement. 
 
 features <- read.table("./UCI-HAR-Dataset/features.txt")
 
@@ -34,7 +34,7 @@ names(joinData) <- gsub("mean", "Mean", names(joinData)) # capitalize M
 names(joinData) <- gsub("std", "Std", names(joinData)) # capitalize S
 names(joinData) <- gsub("-", "", names(joinData)) # remove "-" in column names 
 
-#3. Uses descriptive activity names to name the activities in the data set
+#3. Use descriptive activity names to name the activities in the data set
 
 activity <- read.table("./UCI-HAR-Dataset/activity_labels.txt")
 activity[, 2] <- tolower(gsub("_", "", activity[, 2]))
@@ -44,7 +44,7 @@ activityLabel <- activity[joinLabel[, 1], 2]
 joinLabel[, 1] <- activityLabel
 names(joinLabel) <- "activity"
 
-#4. Appropriately labels the data set with descriptive activity names. 
+#4. Label the data set with descriptive activity names. 
 
 names(joinSubject) <- "subject"
 cleanedData <- cbind(joinSubject, joinLabel, joinData)
@@ -52,7 +52,7 @@ cleanedData <- cbind(joinSubject, joinLabel, joinData)
 # write out the Merged dataset
 write.table(cleanedData, "mergedData.txt") 
 
-#5. Creates a second, independent tidy data set with the average of each variable for each activity and each subject. 
+#5. Create a second, independent tidy data set with the average of each variable for each activity and each subject. 
 
 subjectLen <- length(table(joinSubject)) # 30
 activityLen <- dim(activity)[1] # 6
@@ -76,4 +76,4 @@ for(i in 1:subjectLen) {
 head(result)
 
 # write out the Tidy Dataset file.
-write.table(result, "tidyDataWithMeans.txt", row.name=FALSE) 
+write.table(result, "run_analysis.txt", row.name=FALSE) 
